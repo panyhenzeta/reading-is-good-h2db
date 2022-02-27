@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+/**
+ * Statistics service that statistic operations.
+ */
 @Service
 public class StatisticsService {
     private final OrderService orderService;
@@ -20,6 +23,11 @@ public class StatisticsService {
         this.orderService = orderService;
     }
 
+    /**
+     * method that give monthly statistics.
+     *
+     * @return success response with list of monthly statistics.
+     */
     public List<MonthlyStatisticsDTO> getMonthlyStatistics(){
         Map<Integer, List<CustomerOrder>> grouppedList = orderService.findAll()
                 .stream()

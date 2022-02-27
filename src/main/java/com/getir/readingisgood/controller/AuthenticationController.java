@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * Authentication controller for jwt.
+ */
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
@@ -28,6 +32,12 @@ public class AuthenticationController {
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Endpoint that create jwt token.
+     *
+     * @param authRequest username and password.
+     * @return token.
+     */
     @PostMapping("/login")
     public String creteToken(@Valid @RequestBody AuthRequest authRequest) throws Exception {
         try {

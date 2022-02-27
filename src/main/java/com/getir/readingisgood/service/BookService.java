@@ -13,6 +13,9 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Book service that create and update operations.
+ */
 @Service
 public class BookService {
 
@@ -24,6 +27,12 @@ public class BookService {
         this.bookStockRepository = bookStockRepository;
     }
 
+    /**
+     * method that give monthly statistics.
+     *
+     * @param book DTO object for book.
+     * @return saved object.
+     */
     public Book createBook(BookDTO book){
         Book newBook = book.convertBook();
         BookStock bookStock = new BookStock();
@@ -33,6 +42,13 @@ public class BookService {
         return bookRepository.save(newBook);
     }
 
+    /**
+     * method that update stock of book.
+     *
+     * @param bookId for existing book.
+     * @param stock for increasing or decreasing.
+     * @return updated object.
+     */
     @Transactional
     public UpdateStockDTO updateStock(Long bookId, Long stock){
         AtomicReference<UpdateStockDTO> updateStockDTO = new AtomicReference<>();

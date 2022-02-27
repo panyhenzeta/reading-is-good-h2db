@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Statistics controller for order statistics
+ */
 @RestController
 @RequestMapping("/api")
 public class StatisticsController {
@@ -20,6 +23,11 @@ public class StatisticsController {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Endpoint that create order.
+     *
+     * @return success response with monthly order statistic.
+     */
     @GetMapping("/statistics/monthly")
     public ResponseEntity<SuccessResponse<List<MonthlyStatisticsDTO>>> getMonthlyStatistics() {
         List<MonthlyStatisticsDTO> successResponse = statisticsService.getMonthlyStatistics();

@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Order service that create, get and list operations.
+ */
 @Service
 public class OrderService {
 
@@ -28,6 +31,12 @@ public class OrderService {
         this.customerService = customerService;
     }
 
+    /**
+     * method that create order.
+     *
+     * @param order DTO object for order.
+     * @return saved object.
+     */
     public CustomerOrderResponseDTO createOrder(CustomerOrderRequestDTO order) {
         CustomerOrder newOrder = new CustomerOrder();
         newOrder.setTotalPrice(order.getTotalPrice());
@@ -44,12 +53,25 @@ public class OrderService {
         return orderResponseDTO;
     }
 
+    /**
+     * Method that create order.
+     *
+     * @param orderId of existing order.
+     * @return existing order.
+     */
     public CustomerOrderResponseDTO getOrderById(Long orderId) {
         CustomerOrder order = findOrderById(orderId);
         CustomerOrderResponseDTO orderDTO = new CustomerOrderResponseDTO(order);
         return orderDTO;
     }
 
+    /**
+     * Method that create order.
+     *
+     * @param startDate for order date.
+     * @param endDate for order date.
+     * @return existing list of orders.
+     */
     public List<CustomerOrderResponseDTO> listOrdersByStartDateAndEndDate(Instant startDate, Instant endDate) {
         List<CustomerOrderResponseDTO> customerOrderList = orderRepository.findByOrderDateBetween(startDate, endDate)
                         .stream().map(customerOrder -> {

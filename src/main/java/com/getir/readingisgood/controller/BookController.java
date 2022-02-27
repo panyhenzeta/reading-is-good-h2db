@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * Book controller for book and book stock operations.
+ */
 @RestController
 @RequestMapping("/api")
 public class BookController {
@@ -20,12 +23,25 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    /**
+     * Endpoint that create book.
+     *
+     * @param book DTO object for book.
+     * @return success response with saved object.
+     */
     @PostMapping("/books")
     public ResponseEntity<SuccessResponse<Book>> createBook(@Valid @RequestBody BookDTO book) {
         Book savedBook = bookService.createBook(book);
         return ResponseEntity.ok().body(new SuccessResponse<>(savedBook));
     }
 
+    /**
+     * Endpoint that update stock of book.
+     *
+     * @param bookId for existing book.
+     * @param stock for increasing or decreasing.
+     * @return success response with saved object.
+     */
     @PutMapping("/book/update-stock")
     public ResponseEntity<SuccessResponse<UpdateStockDTO>> updateStock(@Valid @RequestParam Long bookId, @Valid @RequestParam Long stock){
         UpdateStockDTO updateStock = bookService.updateStock(bookId, stock);
