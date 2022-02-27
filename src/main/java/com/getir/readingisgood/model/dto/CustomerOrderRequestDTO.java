@@ -3,10 +3,12 @@ package com.getir.readingisgood.model.dto;
 import com.getir.readingisgood.model.dto.abstractdto.AbstractCustomerOrder;
 import com.getir.readingisgood.validator.annotation.BookStockInfo;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class CustomerOrderRequestDTO extends AbstractCustomerOrder {
 
+    @NotNull
     private Long customerId;
 
     @BookStockInfo
