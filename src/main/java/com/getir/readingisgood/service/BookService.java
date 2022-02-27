@@ -26,7 +26,8 @@ public class BookService {
 
     public Book createBook(BookDTO book){
         Book newBook = book.convertBook();
-        BookStock bookStock = new BookStock(1L);
+        BookStock bookStock = new BookStock();
+        bookStock.setStock(1L);
         newBook.setBookStock(bookStock);
         bookStock.setBook(newBook);
         return bookRepository.save(newBook);

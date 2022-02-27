@@ -8,15 +8,6 @@ import javax.persistence.*;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class Customer {
 
-    public Customer(){}
-
-    public Customer(Long id, String email, String name, String surname) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.surname = surname;
-    }
-
     @Id
     @GeneratedValue
     private Long id;

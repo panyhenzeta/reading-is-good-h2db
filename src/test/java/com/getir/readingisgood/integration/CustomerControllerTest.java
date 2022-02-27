@@ -57,12 +57,12 @@ public class CustomerControllerTest {
         Customer customer = new Customer();
         customer.setName("Zeynep");
         customer.setSurname("Kara");
-        customer.setEmail("asdfdfdgfdgg@gmail.com");
+        customer.setEmail("getir@getir.com");
         return customer;
     }
 
     @Test
-    public void createCustomerTest() throws Exception {
+    public void whenSaveCustomer_shouldReturnSuccess() throws Exception {
         this.mock.perform(post("/api/customers")
                         .content(asJsonString(getCustomer()))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +72,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void listCustomersTest() throws Exception {
+    public void whenListCustomer_shouldReturnCustomerList() throws Exception {
         Customer customer = getCustomer();
         List<Customer> customerList = Arrays.asList(customer);
 

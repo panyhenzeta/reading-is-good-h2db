@@ -40,11 +40,14 @@ public class BookServiceTest {
 
     @Before
     public void init(){
+        Long stock = Double.valueOf(Math.random() * 5).longValue();
+
         this.book = new Book();
         this.book.setName("Getir");
         this.book.setPrice(25.0);
 
-        this.bookStock = new BookStock(5L);
+        this.bookStock = new BookStock();
+        this.bookStock.setStock(stock);
         this.book.setBookStock(bookStock);
         this.bookStock.setBook(book);
     }

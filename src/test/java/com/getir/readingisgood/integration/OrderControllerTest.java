@@ -13,6 +13,7 @@ import com.getir.readingisgood.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -32,6 +33,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
@@ -52,9 +54,68 @@ public class OrderControllerTest {
     @MockBean
     private OrderRepository orderRepository;
 
+    private Customer customer;
+    private Book book;
+    private CustomerOrder order;
+
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        setCustomer();
+        setBook();
+        setOrder();
+    }
+
+    private void setCustomer() {
+        customer = new Customer();
+        customer.setEmail("getir@getir.com");
+        customer.setName("Getir");
+        customer.setSurname("Getir");
+    }
+
+    private void setBook() {
+        Double price = Double.valueOf(Math.random() * 10);
+        Long stock = Double.valueOf(Math.random() * 15).longValue();
+
+        book = new Book();
+        book.setName("Hobbit");
+        book.setPrice(price);
+
+        BookStock bookStock = new BookStock();
+        bookStock.setStock(stock);
+        book.setBookStock(bookStock);
+        bookStock.setBook(book);
+    }
+
+    private static CustomerOrderRequestDTO getOrderDTO() {
+        Long id = Double.valueOf(Math.random() * 10).longValue();
+        Double price = Double.valueOf(Math.random() * 10);
+        Integer stock = Double.valueOf(Math.random() * 5).intValue();
+
+        CustomerOrderRequestDTO orderRequestDTO = new CustomerOrderRequestDTO();
+        orderRequestDTO.setTotalPrice(price);
+        orderRequestDTO.setCustomerId(id);
+
+        OrderBookRequestDTO orderBookRequestDTO = new OrderBookRequestDTO();
+        orderBookRequestDTO.setQuantity(stock);
+        orderBookRequestDTO.setBookId(id);
+        orderRequestDTO.setBookOrders(Arrays.asList(orderBookRequestDTO));
+        return orderRequestDTO;
+    }
+
+    public void setOrder() {
+        Integer stock = Double.valueOf(Math.random() * 2).intValue();
+
+        order = new CustomerOrder();
+
+        OrderBook orderBook = new OrderBook();
+        orderBook.setBook(this.book);
+        orderBook.setQuantity(stock);
+
+        order.setOrderBooks(Arrays.asList(orderBook));
+        order.setCustomer(this.customer);
+        order.setStatus(OrderStatus.CREATED);
+        order.setOrderDate(Instant.now());
     }
 
     public static String asJsonString(final Object obj) {
@@ -65,75 +126,36 @@ public class OrderControllerTest {
         }
     }
 
-    private static Book getBook() {
-        Book book = new Book();
-        book.setName("Hobbit");
-        book.setPrice(32.8);
-        BookStock bookStock = new BookStock(8L, 25L, 1);
-        book.setBookStock(bookStock);
-        bookStock.setBook(book);
-        return book;
+    @Test
+    public void whenSaveOrder_shouldReturnSuccess() throws Exception {
+        given(customerService.findCustomerById(ArgumentMatchers.any(Long.class))).willReturn(customer);
+        given(bookService.findBookById(ArgumentMatchers.any(Long.class))).willReturn(book);
+        given(orderRepository.save(ArgumentMatchers.any(CustomerOrder.class))).willReturn(order);
+
+        this.mock.perform(post("/api/orders")
+                        .content(asJsonString(getOrderDTO()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+        ;
+
     }
-
-    private static Customer getCustomer() {
-        Customer customer = new Customer(82L, "zkaram@gmail.com", "Zeynep", "Kara");
-        return customer;
-    }
-
-    private static CustomerOrderRequestDTO getOrderDTO() {
-        CustomerOrderRequestDTO orderRequestDTO = new CustomerOrderRequestDTO();
-        orderRequestDTO.setTotalPrice(25.0);
-        orderRequestDTO.setCustomerId(82L);
-
-        OrderBookRequestDTO orderBookRequestDTO = new OrderBookRequestDTO();
-        orderBookRequestDTO.setQuantity(12);
-        orderBookRequestDTO.setBookId(85L);
-        orderRequestDTO.setBookOrders(Arrays.asList(orderBookRequestDTO));
-        return orderRequestDTO;
-    }
-
-    private static CustomerOrder getOrder() {
-        CustomerOrder order = new CustomerOrder();
-
-        OrderBook orderBook = new OrderBook();
-        orderBook.setBook(getBook());
-        orderBook.setQuantity(5);
-
-        order.setOrderBooks(Arrays.asList(orderBook));
-        order.setCustomer(getCustomer());
-        order.setStatus(OrderStatus.CREATED);
-        order.setOrderDate(Instant.now());
-        return order;
-    }
-
-//    @Test
-//    public void createOrderTest() throws Exception {
-//        given(customerService.findCustomerById(82L)).willReturn(getCustomer());
-//        given(bookService.findBookById(85L)).willReturn(getBook());
-//
-//        this.mock.perform(post("/api/orders")
-//                        .content(asJsonString(getOrderDTO()))
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-//        ;
-//
-//    }
 
     @Test
-    public void getOrderTest() throws Exception {
-        given(orderRepository.findById(5L)).willReturn(Optional.of(getOrder()));
+    public void whenGetOrder_shouldReturnOrder() throws Exception {
+        given(orderRepository.findById(ArgumentMatchers.any(Long.class))).willReturn(Optional.of(order));
+
         this.mock.perform(get("/api/orders/5")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content.customerName", is("Zeynep")));
+                .andExpect(jsonPath("$.content.customerName", is(order.getCustomer().getName())));
 
     }
 
     @Test
-    public void listOrdersByStartDateAndEndDate() throws Exception {
+    public void whenListOrderByDate_shouldReturnOrderList() throws Exception {
         Instant date = Instant.now();
-        given(orderRepository.findByOrderDateBetween(date, date)).willReturn(Arrays.asList(getOrder()));
+        given(orderRepository.findByOrderDateBetween(date, date)).willReturn(Arrays.asList(order));
         this.mock.perform(get("/api/orders")
                         .param("startDate", date.toString())
                         .param("endDate", date.toString())

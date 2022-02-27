@@ -46,21 +46,25 @@ public class BookControllerTest {
     @MockBean
     private BookStockRepository bookStockRepository;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     private Book book;
     private BookStock bookStock;
 
     @Before
     public void init(){
+        MockitoAnnotations.openMocks(this);
+        setBook();
+    }
+
+    private void setBook() {
+        Double price = Double.valueOf(Math.random() * 10);
+        Long stock = Double.valueOf(Math.random() * 10).longValue();
+
         this.book = new Book();
         this.book.setName("Getir");
-        this.book.setPrice(25.0);
+        this.book.setPrice(price);
 
-        this.bookStock = new BookStock(5L);
+        this.bookStock = new BookStock();
+        this.bookStock.setStock(stock);
         this.book.setBookStock(bookStock);
         this.bookStock.setBook(book);
     }
@@ -74,7 +78,7 @@ public class BookControllerTest {
     }
 
     @Test
-    public void createBookTest() throws Exception {
+    public void whenSaveBook_shouldReturnSuccess() throws Exception {
         this.mock.perform(post("/api/books")
                         .content(asJsonString(book))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -83,11 +87,11 @@ public class BookControllerTest {
     }
 
     @Test
-    public void updateBookStock() throws Exception {
+    public void whenUpdateBookStock_shouldReturnSuccess() throws Exception {
         given(bookStockRepository.findBookStockByBookId(ArgumentMatchers.any(Long.class))).willReturn(Optional.ofNullable(bookStock));
         given(bookStockRepository.save(ArgumentMatchers.any(BookStock.class))).willReturn(bookStock);
 
-        Long stock = Double.valueOf(Math.random() * 10).longValue();
+        Long stock = Double.valueOf(Math.random() * 5).longValue();
         Long id = Double.valueOf(Math.random() * 10).longValue();
         this.mock.perform(put("/api/book/update-stock")
                         .param("bookId", id.toString())

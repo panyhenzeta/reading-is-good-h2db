@@ -62,17 +62,21 @@ public class OrderServiceTest {
     }
 
     private void setBook(){
+        Long stock = Double.valueOf(Math.random()*15).longValue();
+        Double price = Double.valueOf(Math.random()*15);
+
         this.book = new Book();
         this.book.setName("Getir");
-        this.book.setPrice(25.0);
+        this.book.setPrice(price);
 
-        BookStock bookStock = new BookStock(5L);
+        BookStock bookStock = new BookStock();
+        bookStock.setStock(stock);
         this.book.setBookStock(bookStock);
         bookStock.setBook(book);
     }
 
     public void setOrder(){
-        Integer quantity = Double.valueOf(Math.random()*10).intValue();
+        Integer quantity = Double.valueOf(Math.random()*2).intValue();
         Double price = Double.valueOf(Math.random()*100);
 
         OrderBook orderBook = new OrderBook();

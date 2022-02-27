@@ -7,18 +7,6 @@ import javax.persistence.*;
 @Entity
 public class BookStock {
 
-    public BookStock() {}
-
-    public BookStock(Long stock) {
-        this.stock = stock;
-    }
-
-    public BookStock(Long id, Long stock, int version) {
-        this.id = id;
-        this.stock = stock;
-        this.version = version;
-    }
-
     @Id
     @GeneratedValue
     private Long id;
