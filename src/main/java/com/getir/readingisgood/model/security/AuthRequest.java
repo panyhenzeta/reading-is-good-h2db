@@ -1,8 +1,13 @@
 package com.getir.readingisgood.model.security;
 
+import javax.validation.constraints.NotNull;
+
 public class AuthRequest {
 
+    @NotNull
     private String username;
+
+    @NotNull
     private String password;
 
     public AuthRequest() {

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
@@ -27,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String creteToken(@RequestBody AuthRequest authRequest) throws Exception {
+    public String creteToken(@Valid @RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException ex) {

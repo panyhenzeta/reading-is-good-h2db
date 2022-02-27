@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<SuccessResponse<Customer>> createCustomer(@RequestBody CustomerDTO customer) {
+    public ResponseEntity<SuccessResponse<Customer>> createCustomer(@Valid @RequestBody CustomerDTO customer) {
         Customer savedCustomer = customerService.createCustomer(customer);
         return  ResponseEntity.ok().body(new SuccessResponse<>(savedCustomer));
     }

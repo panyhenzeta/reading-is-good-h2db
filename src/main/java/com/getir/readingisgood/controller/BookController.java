@@ -8,6 +8,8 @@ import com.getir.readingisgood.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class BookController {
@@ -19,13 +21,13 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<SuccessResponse<Book>> createBook(@RequestBody BookDTO book) {
+    public ResponseEntity<SuccessResponse<Book>> createBook(@Valid @RequestBody BookDTO book) {
         Book savedBook = bookService.createBook(book);
         return ResponseEntity.ok().body(new SuccessResponse<>(savedBook));
     }
 
     @PutMapping("/book/update-stock")
-    public ResponseEntity<SuccessResponse<UpdateStockDTO>> updateStock(@RequestParam Long bookId, @RequestParam Long stock){
+    public ResponseEntity<SuccessResponse<UpdateStockDTO>> updateStock(@Valid @RequestParam Long bookId, @Valid @RequestParam Long stock){
         UpdateStockDTO updateStock = bookService.updateStock(bookId, stock);
         return ResponseEntity.ok().body(new SuccessResponse<>(updateStock));
     }
