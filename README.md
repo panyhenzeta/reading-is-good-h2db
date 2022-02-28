@@ -54,6 +54,13 @@
   - Controllers and services and designed.
   - Tests are written.
 
+- Validations
+  - Email is unique for customers. Email can not be null
+  - Book name and price can not be null.
+  - For orders customer and book must be existed.
+  - Customers can not be order book which its stock is not enough.
+  - Customer can not be order book with negative quantity
+
 - Assumptions
   - It is assumed that there is no data in the system at first.
   - It is developed for distributed operation (docker)
