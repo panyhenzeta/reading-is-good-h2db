@@ -19,6 +19,12 @@ Developer note:
    - Postman request collections are added on ```${project.base}/getir.postman_collection.json```
    - Integration and unit tests exist for service and controllers and run with mock services.
    - Logging is available
+   - API urls: 
+     - ```POST /api/auth/login``` to authenticate for jwt token
+     - ```POST /api/customers``` to create customer
+     - ```GET /api/customers``` to list customers
+     - ```POST /api/books``` to create book
+     - ```PUT /api/book/update-stock``` to update stock of existing book
 
 ## Tech stack:
 
