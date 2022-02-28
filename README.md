@@ -54,6 +54,10 @@
   - Controllers and services and designed.
   - Tests are written.
 
+- Assumptions
+  - It is assumed that there is no data in the system at first.
+  - It is developed for distributed operation (docker)
+
 ## Build
 
 #Running steps:
