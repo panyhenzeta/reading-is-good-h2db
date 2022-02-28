@@ -42,6 +42,14 @@
 
 ![image](https://user-images.githubusercontent.com/9322357/155968084-43df853d-08cf-4ffc-aa16-100cb1685b4e.png)
 
+* Customer has name, surname and email. Email field is unique for customers.
+* Book has name and price. 
+* Book has one to one relation with BookStock. BookStock has also quantity for stock information.
+* 
+
+* The project is started with designing database.
+* Controllers and services and designed.
+* Tests are written.
 
 ## Build
 
