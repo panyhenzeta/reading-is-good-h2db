@@ -25,6 +25,10 @@ Developer note:
      - ```GET /api/customers``` to list customers
      - ```POST /api/books``` to create book
      - ```PUT /api/book/update-stock``` to update stock of existing book
+     - ```POST /api/orders``` to create order
+     - ```GET /api/orders/{id}``` to get order with id
+     - ```GET /api/orders``` to list order with given start date and end date
+     - ```GET /api/statistics/monthly``` to give monthly statistics
 
 ## Tech stack:
 
