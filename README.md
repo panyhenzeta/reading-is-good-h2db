@@ -1,4 +1,4 @@
-Developer note:
+## Developer note:
   - This project developed with Java 11 and spring framework(spring boot v 2.6.3)
   - H2 database used for store data. save entities, persist request and response etc.
     - H2 database can be reached {project_url}/h2-console. Credentials for h2-console,
@@ -30,12 +30,18 @@ Developer note:
      - ```GET /api/orders``` to list order with given start date and end date
      - ```GET /api/statistics/monthly``` to give monthly statistics
 
+
+## Design
+
+![image](https://user-images.githubusercontent.com/9322357/155968084-43df853d-08cf-4ffc-aa16-100cb1685b4e.png)
+
+
 ## Tech stack:
 
 * Java 11
 * H2 database
 * Docker
-* swagger
+* Swagger
 
 
 #Running steps:
