@@ -59,7 +59,8 @@
   - Book name and price can not be null.
   - For orders customer and book must be existed.
   - Customers can not be order book which its stock is not enough.
-  - Customer can not be order book with negative quantity
+  - Customer can not be order book with negative quantity.
+  - Customer can not be buy same book with same time.
 
 - Assumptions
   - It is assumed that there is no data in the system at first.
