@@ -42,14 +42,17 @@
 
 ![image](https://user-images.githubusercontent.com/9322357/155968084-43df853d-08cf-4ffc-aa16-100cb1685b4e.png)
 
-* Customer has name, surname and email. Email field is unique for customers.
-* Book has name and price. 
-* Book has one to one relation with BookStock. BookStock has also quantity for stock information.
-* 
+- Db Design
+  - Customer has name, surname and email. Email field is unique for customers.
+  - Book has name and price. 
+  - Book has one to one relation with BookStock. BookStock has also quantity for stock quantity information.
+  - CustomerOrder is table for order. CustomerOrder has ordered date, price, status. CustomerOrder has many to one relationship with Customer. It has many to many relationship with Book.
+  - OrderBook is junction table of CustomerOrder and Book. OrderBook gives the information of which book is ordered and how many of them ordered as a quantity in the order.
 
-* The project is started with designing database.
-* Controllers and services and designed.
-* Tests are written.
+- System Design
+  - The project is started with designing database.
+  - Controllers and services and designed.
+  - Tests are written.
 
 ## Build
 
