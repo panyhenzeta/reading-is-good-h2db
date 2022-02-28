@@ -15,8 +15,8 @@ Developer note:
        - username: getir
        - password: getir
       ```
-   - Api-docs of rest client(ex: postman) can be reachable on ${project.base}/api-docs
-   - Postman request collections are added on ${project.base}/getir.postman_collection.json
+   - Api-docs of rest client(ex: postman) can be reachable on ```${project.base}/api-docs```
+   - Postman request collections are added on ```${project.base}/getir.postman_collection.json```
    - Integration and unit tests exist for service and controllers.
    - Logging is available
 
