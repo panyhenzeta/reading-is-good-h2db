@@ -15,6 +15,8 @@ Developer note:
        - username: getir
        - password: getir
       ```
+   - Api-docs of rest client(ex: postman) can be reachable on ${project.base}/api-docs
+   - Integration and unit tests exist for service and controllers.
 
 ## Tech stack:
 
