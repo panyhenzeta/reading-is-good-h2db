@@ -8,8 +8,13 @@ Developer note:
        - password: 
       ```
   - Rest APIs documented with swagger on [Swagger](http://localhost:8080/swagger-ui) 
-
-
+  - APIs serving on 8080 port.
+  - Project uses spring token based security for authentication. Token must be taken in given endpoint with username and password credentials.
+       ```
+       - endpoint: /api/auth/login
+       - username: getir
+       - password: getir
+      ```
 
 ## Tech stack:
 
