@@ -30,19 +30,20 @@
      - ```GET /api/orders``` to list order with given start date and end date
      - ```GET /api/statistics/monthly``` to give monthly statistics
 
-
-## Design
-
-![image](https://user-images.githubusercontent.com/9322357/155968084-43df853d-08cf-4ffc-aa16-100cb1685b4e.png)
-
-
 ## Tech stack:
 
 * Java 11
 * H2 database
 * Docker
 * Swagger
+* Mockito
 
+## Design
+
+![image](https://user-images.githubusercontent.com/9322357/155968084-43df853d-08cf-4ffc-aa16-100cb1685b4e.png)
+
+
+## Build
 
 #Running steps:
 - Go to project directory.
